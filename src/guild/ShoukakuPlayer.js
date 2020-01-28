@@ -253,6 +253,7 @@ class ShoukakuPlayer extends EventEmitter {
             hq
         });
         if (speed !== this.nightcore) this.nightcore = speed;
+        if (this.vaporwave) this.vaporwave = false;
         return true;
     }
 
@@ -284,6 +285,7 @@ class ShoukakuPlayer extends EventEmitter {
             enabled
         });
         if (enabled !== this.vaporwave) this.vaporwave = enabled;
+        if (this.nightcore !== 1.0) this.nightcore = 1.0;
         return true;
     }
 
