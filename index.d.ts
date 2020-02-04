@@ -15,7 +15,7 @@ declare module 'shoukaku' {
   }
 
   export class ShoukakuUtil {
-    public static mergeDefault(def: Object, given: Object);
+    public static mergeDefault(def: Object, given: Object): Object;
   }
 
   export interface Track {
@@ -205,8 +205,7 @@ declare module 'shoukaku' {
     public seekTo(position: number): Promise<boolean>;
 
     private _listen(event: string, data: unknown): void;
-    private _clearTrack(): void;
-    private _clearBands(): void;
+    private _resetPlayer(): void;
     private _resume(): Promise<void>;
   }
 
@@ -278,22 +277,22 @@ declare module 'shoukaku' {
     on(event: 'debug', listener: (name: string, data: unknown) => void): this;
     on(event: 'error', listener: (name: string, error: ShoukakuError | Error) => void): this;
     on(event: 'ready', listener: (name: string, reconnect: boolean) => void): this;
-    on(event: 'closed', listener: (name: string, code: number, reason: string | null) => void): this;
+    on(event: 'close', listener: (name: string, code: number, reason: string | null) => void): this;
     on(event: 'disconnected', listener: (name: string, reason: string | null) => void): this;
     once(event: 'debug', listener: (name: string, data: unknown) => void): this;
     once(event: 'error', listener: (name: string, error: ShoukakuError | Error) => void): this;
     once(event: 'ready', listener: (name: string, reconnect: boolean) => void): this;
-    once(event: 'closed', listener: (name: string, code: number, reason: string | null) => void): this;
+    once(event: 'close', listener: (name: string, code: number, reason: string | null) => void): this;
     once(event: 'disconnected', listener: (name: string, reason: string | null) => void): this;
     off(event: 'debug', listener: (name: string, data: unknown) => void): this;
     off(event: 'error', listener: (name: string, error: ShoukakuError | Error) => void): this;
     off(event: 'ready', listener: (name: string, reconnect: boolean) => void): this;
-    off(event: 'closed', listener: (name: string, code: number, reason: string | null) => void): this;
+    off(event: 'close', listener: (name: string, code: number, reason: string | null) => void): this;
     off(event: 'disconnected', listener: (name: string, reason: string | null) => void): this;
   }
 
   export class Shoukaku extends EventEmitter {
-    constructor(client: DiscordClient, options: ShoukakuOptions);
+    constructor(client: DiscordClient, nodes: ShoukakuNodeOptions[], options: ShoukakuOptions);
     public client: DiscordClient;
     public id: string | null;
     public shardCount: number | null;
@@ -303,13 +302,16 @@ declare module 'shoukaku' {
     public totalPlayers: number;
 
     private options: ShoukakuOptions;
+    private rawRouter: unknown;
+    private reconnectRouter: unknown;
+    private processingReconnect: Set<string>;
 
     public addNode(nodeOptions: ShoukakuNodeOptions): void;
     public removeNode(name: string, reason?: string): void;
     public getNode(name?: string): ShoukakuSocket;
-    public getLink(guildId: string): ShoukakuLink | null;
+    public getPlayer(guildId: string): ShoukakuPlayer | null;
 
     private _ready(name: string, resumed: boolean): void;
-    private _reconnect(name: string, code: number, reason: string): void;
+    private _close(name: string, code: number, reason: string): void;
   }
 }
