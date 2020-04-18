@@ -5,11 +5,9 @@
 ![GitHub issues](https://img.shields.io/github/issues-raw/Deivu/Shoukaku?style=flat-square)
 ![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/shoukaku?style=flat-square) 
 ![NPM](https://img.shields.io/npm/l/shoukaku?style=flat-square)
+
 <p align="center">
-  <img src="https://vignette.wikia.nocookie.net/kancolle/images/c/c8/Shoukaku_Full.png/revision/latest">
+  <img src="https://wallup.net/wp-content/uploads/2018/09/26/185136-Kantai_Collection-anime-anime_girls-Shoukaku_KanColle-Zuikaku_KanColle.jpg">
 </p>
 
-The ShipGirl Project. Shoukaku `(c) Kancolle for Shoukaku`
-
-### Shoukaku's module for Kashima
-> Not intended for public usage.
+The ShipGirl Project, feat Shoukaku (<=) & Zuikaku (=>) `(c) Kancolle for our cute girls`
