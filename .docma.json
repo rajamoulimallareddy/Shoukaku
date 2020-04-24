@@ -1,13 +1,14 @@
 {
     "src":[
+        "./index.js",
         "./src/*.js",
         "./src/**/*.js",
         "./README.md"
     ],
     "dest":"./docs",
     "jsdoc":{
-        "hierarchy": true,
-        "sort": "kind",
+        "hierarchy":true,
+        "sort":"kind",
         "plugins":[
             "plugins/markdown"
         ]
@@ -27,7 +28,28 @@
                 "label":"Shoukaku",
                 "href":"."
             },
+            "sidebar":{
+                "enabled":true,
+                "outline":"tree",
+                "collapsed":false,
+                "toolbar":true,
+                "itemsFolded":false,
+                "itemsOverflow":"crop",
+                "badges":true,
+                "search":true,
+                "animations":true
+            },
+            "symbols":{
+                "autoLink":true,
+                "params":"list",
+                "enums":"list",
+                "props":"list",
+                "meta":false
+            },
             "navbar":{
+                "enabled":true,
+                "dark":false,
+                "animations":true,
                 "menu":[
                     {
                         "label":"Readme",

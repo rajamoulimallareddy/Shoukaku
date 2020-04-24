@@ -29,7 +29,7 @@ class Shoukaku extends EventEmitter {
             throw new ShoukakuError('Shoukaku will only work in Discord.JS v12 / Discord.JS Master Branch. Versions below Discord.JS v12 is not supported.');
         /**
         * The instance of Discord.js client used with Shoukaku.
-        * @type {external.Client}
+        * @type {Client}
         */
         this.client = client;
         /**
