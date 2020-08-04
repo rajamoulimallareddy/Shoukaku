@@ -1,5 +1,5 @@
 const { RawRouter } = require('./router/ShoukakuRouter.js');
-const util  = require('./util/ShoukakuUtil.js');
+const util = require('./util/ShoukakuUtil.js');
 const constants = require('./constants/ShoukakuConstants.js');
 const ShoukakuError = require('./constants/ShoukakuError.js');
 const ShoukakuSocket = require('./node/ShoukakuSocket.js');
@@ -157,8 +157,8 @@ class Shoukaku extends EventEmitter {
         const node = this.nodes.get(name);
         if (!node) return;
         node.state = constants.ShoukakuStatus.DISCONNECTING;
-        node._executeCleaner()
-            .catch((error) => this.emit('error', name, error))
+        node.executeCleaner()
+            .catch(error => this.emit('error', name, error))
             .finally(() => {
                 node.state = constants.ShoukakuStatus.DISCONNECTED;
                 this.nodes.delete(name);
@@ -223,7 +223,7 @@ class Shoukaku extends EventEmitter {
         const node = this.nodes.get(name);
         if (!resumed) {
             try {
-                await node._executeCleaner();
+                await node.executeCleaner();
             } catch (error) {
                 this.emit('error', name, error);
             }
