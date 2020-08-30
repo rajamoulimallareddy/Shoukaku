@@ -158,22 +158,21 @@ class ShoukakuPlayer extends EventEmitter {
      * @memberOf ShoukakuPlayer
      * @returns {Promise<ShoukakuPlayer>}
      */
-    async playTrack(track, options) {
-        if (!track) 
-            throw new ShoukakuError('No track specified to play');
-        if (track instanceof ShoukakuTrack) track = track.track;
+    async playTrack(input, options) {
+        if (!input) 
+            throw new ShoukakuError('No track given to play');
+        if (input instanceof ShoukakuTrack) input = input.track;
         options = util.mergeDefault(ShoukakuPlayOptions, options);
         const { noReplace, startTime, endTime } = options;
         const payload = {
             op: 'play',
             guildId: this.voiceConnection.guildID,
-            track,
+            track: input,
             noReplace
         };
         if (startTime) payload.startTime = startTime;
         if (endTime) payload.endTime = endTime;
         await this.voiceConnection.node.send(payload);
-        if (track !== this.track) this.track = track;
         return this;
     }
     /**
@@ -182,7 +181,6 @@ class ShoukakuPlayer extends EventEmitter {
      * @returns {Promise<ShoukakuPlayer>}
      */
     async stopTrack() {
-        this.track = null;
         this.position = 0;
         await this.voiceConnection.node.send({
             op: 'stop',
@@ -231,8 +229,8 @@ class ShoukakuPlayer extends EventEmitter {
      * @returns {Promise<ShoukakuPlayer>}
      */
     async setVolume(volume) {
-        if (!volume) 
-            throw new ShoukakuError('No volume specfied, please input the new volume');
+        if (!Number.isInteger(volume)) 
+            throw new ShoukakuError('Please input a valid number for volume');
         volume = Math.min(1000, Math.max(0, volume));
         await this.voiceConnection.node.send({
             op: 'volume',
@@ -249,8 +247,8 @@ class ShoukakuPlayer extends EventEmitter {
      * @returns {Promise<ShoukakuPlayer>}
      */
     async seekTo(position) {
-        if (!position) 
-            throw new ShoukakuError('No position specified, please input the new position');
+        if (!Number.isInteger(position)) 
+            throw new ShoukakuError('Please input a valid number for position');
         await this.voiceConnection.node.send({
             op: 'seek',
             guildId: this.voiceConnection.guildID,
@@ -349,7 +347,8 @@ class ShoukakuPlayer extends EventEmitter {
             event === 'nodeDisconnect' ? this.reset(true) : this.reset();
             return super.emit(event, data);
         }
-        if (data && data.position) this.position = data.position;
+        if (event === 'start') this.track = data.track;
+        if (event === 'playerUpdate') this.position = data.position;
         return super.emit(event, data);
     }
 }
