@@ -34,7 +34,9 @@ module.exports = {
     SearchTypes: {
         soundcloud: 'scsearch',
         youtube: 'ytsearch',
-        youtubemusic: 'ytmsearch'
+        youtubemusic: 'ytmsearch',
+        spotify: 'spsearch',
+        apple: 'amsearch'
     },
     /**
     * Options that Shoukaku accepts upon initialization
